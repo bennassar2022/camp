@@ -69,7 +69,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../constants.dart';
 import '../models/place_model.dart';
 import 'All_programs.dart';
@@ -104,11 +103,9 @@ class _ProfilePageState extends State<ProfilePage> {
     initPlatforme();
   }
   List<Datum> jsonResponse = [];
-
   Future<List<Datum>> getPlaceByCity(city) async {
-
     var res = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/places'),
+      Uri.parse('https://appcamping.herokuapp.com/api/places'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -116,7 +113,6 @@ class _ProfilePageState extends State<ProfilePage> {
         'city': city,
       }),
     );
-
     if (res.statusCode == 200) {
       var jsonString = json.decode(res.body);
       final placeModel = placeModelFromJson(res.body);
@@ -128,14 +124,12 @@ class _ProfilePageState extends State<ProfilePage> {
     } else {
       print("Response status : ${res.body}");
     }
-
     return jsonResponse;
   }
   @override
   Widget build(BuildContext context) {
     List<String> citiesImages = [];
     List<Datum>? citiesNames;
-
     return Scaffold(
       drawer: Container(
         width: 230,
@@ -295,9 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   InkWell(
                     onTap: () async {
                       citiesNames = [];
-
                       citiesNames = await getPlaceByCity("gabes");
-
                       showCities(citiesImages, citiesNames, "gabes");
                     },
                     child: SingleChildScrollView(
@@ -394,9 +386,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   InkWell(
                     onTap: () async {
                       citiesNames = [];
-
                       citiesNames = await getPlaceByCity("mednine");
-
                       showCities(citiesImages, citiesNames, "mednine");
                     },
                     child: SingleChildScrollView(
@@ -493,9 +483,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   InkWell(
                     onTap: () async {
                       citiesNames = [];
-
                       citiesNames = await getPlaceByCity("tatawin");
-
                       showCities(citiesImages, citiesNames, "tatawin");
                     },
                     child: SingleChildScrollView(
@@ -1704,7 +1692,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> showCities(  //show the cities in this place
-      List<String> citiesImages, List<Datum>? citiesNames, state) {
+      List<String> citiesImages, List<Datum>? citiesNames1, state) async {
+
+    List<Datum> citiesNames = await getPlaceByCity(state);
+
     return showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -1783,7 +1774,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ? ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
-                              itemCount: citiesNames?.length,
+                              itemCount: citiesNames.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return InkWell(
                                   onTap: () => {
@@ -1802,10 +1793,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 ?.getString('token')
                                                 .toString(),
                                     citiesNames[index].images[0]['path'] /*split(",")*/,
-                                    imagesPlace = citiesNames[index]
-                                        .images[0]['path']
+                                   /*imagesPlace = citiesNames[index]
+                                        .images[0],*/
                                       /*  .split(
-                                            ",")*/,
+                                            ",")*/
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -1827,7 +1818,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         .longitude
                                                         .toString(),
                                                     citiesNames[index]
-                                                        .images[0])))
+                                                        .images[0]['path'])))
                                   },
                                   child: Column(children: [
                                     Container(
@@ -1838,7 +1829,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           //show image 0 of the list
                                            citiesNames[index]
                                                 .images[0]['path']
-                                             /*  .substring(0, citiesNames[index]
+                                             /* .substring(0, citiesNames[index]
                                                .images[0]['path'].indexOf(
                                                ","))*/
                                                         )),

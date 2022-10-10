@@ -12,7 +12,7 @@ class AllPrograms extends StatefulWidget {
 
  class _AllProgramsPage extends State<AllPrograms> {
   getPrograms () async {
-    var res = await http.get((Uri.parse("http://10.0.2.2:3000/api/getprograms")));
+    var res = await http.get((Uri.parse("https://appcamping.herokuapp.com/api/getprograms")));
     if (res.statusCode == 200){
       var jsonObj= jsonDecode(res.body);
       return jsonObj['data'];

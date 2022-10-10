@@ -220,7 +220,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
         placeLongitude != "" &&
         _address != "Unknown Location Found") {
       try {
-        final url = Uri.parse('http://192.168.1.15:3000/api/Addplaces');
+        final url = Uri.parse('https://appcamping.herokuapp.com/api/Addplaces');
         Map<String, dynamic> requestBody = <String, dynamic>{
           "user_id": widget.userId! /*"62ec40d875453df034eccd70"*/,
           "Name": namePlace,
@@ -230,6 +230,8 @@ class _AddPlacePageState extends State<AddPlacePage> {
           "latitude": placeLatitude,
           "description": descriptionPlace.isEmpty ? "" : descriptionPlace,
         };
+
+        print('requestBody : $requestBody');
 
         //add list of image
 
@@ -244,10 +246,6 @@ class _AddPlacePageState extends State<AddPlacePage> {
           //       filename: basename(imageFile.path));
           newList.add(await MultipartFile.fromFile(xfile.path,
               contentType: MediaType("image", "jpg")));
-<<<<<<< HEAD
-     
-=======
->>>>>>> 81938c8... second
         }
         requestBody.addAll({"images": newList});
         FormData formData = FormData.fromMap(requestBody);
@@ -255,12 +253,12 @@ class _AddPlacePageState extends State<AddPlacePage> {
         print("newList " + newList.toString());
         //   request.files.addAll(newList);
 
-        final response =
-<<<<<<< HEAD
-            await RestClient().dio.post("/api/Addplaces", data: formData);
-=======
-            await RestClient().dio.post("http://192.168.1.15:3000/api/Addplaces", data: formData);
->>>>>>> 81938c8... second
+        final response = await RestClient().dio.post("https://appcamping.herokuapp.com/api/Addplaces", data: formData);
+
+
+        //       await RestClient().dio.post("/api/Addplaces", data: formData);
+
+
         //  var response = await request.send();
         // final respStr = await response.stream.bytesToString();
         print(response.data);

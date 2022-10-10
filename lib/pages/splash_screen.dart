@@ -65,13 +65,10 @@ class _SplashScreenState extends State<SplashScreen> {
                             //     ? ProfilePage()
                           LoginPage()));
                 },
-<<<<<<< HEAD
             /*    shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(0),*/
-=======
->>>>>>> 81938c8... second
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(

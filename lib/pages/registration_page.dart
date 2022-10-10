@@ -45,9 +45,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
  }*/
   Future userSignup(String email, String lastName, String firstName,
       String number, String password) async {
-    const url = "http://192.168.1.15:3000/auth/signup";
+    const url = "https://appcamping.herokuapp.com/auth/signup";
     var jsonResponse = null;
-
     Map<String, String> requestPayload = {
       "firstName": firstName,
       "lastName": lastName,

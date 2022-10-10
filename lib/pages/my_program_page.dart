@@ -100,7 +100,7 @@ class _MyProgramPage extends State<MyProgram> {
     List<Program> jsonResponse = [];
 
     var res = await http.post(
-      Uri.parse('http://192.168.1.15:3000/api/userprogram'),
+      Uri.parse('https://appcamping.herokuapp.com/api/userprogram'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -275,7 +275,7 @@ class _MyProgramPage extends State<MyProgram> {
                     print("programId : $programId");
                     // delete place
                     var url =
-                        "https://api-camp.herokuapp.com/api/deleteprograms/$programId";
+                        "http://192.168.1.17:3000/api/deleteprograms/$programId";
 
                     var jsonResponse;
                     var res = await http.delete((Uri.parse(url)));
