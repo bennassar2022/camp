@@ -70,4 +70,13 @@ class Datum {
     "images": List<String>.from(images.map((x) => x)),
     "__v": v,
   };
+
+  String? getFirstImage() {
+
+    if(images.length == 0){
+return null;
+    }else{
+      return images[0]["path"];
+    }
+  }
 }

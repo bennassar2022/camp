@@ -85,6 +85,7 @@ class ProfilePage extends StatefulWidget {
     return _ProfilePageState();
   }
 }
+
 class _ProfilePageState extends State<ProfilePage> {
   SharedPreferences? sharedPreferences;
   bool _show = false;
@@ -96,14 +97,16 @@ class _ProfilePageState extends State<ProfilePage> {
   String placeDescription = "";
   String placeAddress = "";
   bool isAuteur = false;
-
+  List<Datum> citiesNames = [];
   @override
   void initState() {
     super.initState();
     initPlatforme();
   }
+
   List<Datum> jsonResponse = [];
-  Future<List<Datum>> getPlaceByCity(city) async {
+  Future getPlaceByCity(city) async {
+    citiesNames.clear();
     var res = await http.post(
       Uri.parse('https://appcamping.herokuapp.com/api/places'),
       headers: <String, String>{
@@ -121,15 +124,18 @@ class _ProfilePageState extends State<ProfilePage> {
       print("response jsonResponse : " + jsonResponse.toString());
       print("response response.body : " + res.body);
       // return jsonResponse.map((data) => new PlaceModel.fromJson(data)).toList();
+      setState(() {
+        citiesNames = jsonResponse;
+      });
     } else {
       print("Response status : ${res.body}");
     }
-    return jsonResponse;
   }
+
   @override
   Widget build(BuildContext context) {
     List<String> citiesImages = [];
-    List<Datum>? citiesNames;
+
     return Scaffold(
       drawer: Container(
         width: 230,
@@ -288,9 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-                      citiesNames = await getPlaceByCity("gabes");
-                      showCities(citiesImages, citiesNames, "gabes");
+                      showCities("gabes");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -385,9 +389,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-                      citiesNames = await getPlaceByCity("mednine");
-                      showCities(citiesImages, citiesNames, "mednine");
+                      showCities("mednine");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -482,9 +484,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-                      citiesNames = await getPlaceByCity("tatawin");
-                      showCities(citiesImages, citiesNames, "tatawin");
+                      showCities("tatawin");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -579,11 +579,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
+                      getPlaceByCity("sfax").then((_) => showCities("sfax"));
 
-                      citiesNames = await getPlaceByCity("sfax");
-
-                      showCities(citiesImages, citiesNames, "sfax");
+                      ;
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -678,11 +676,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("gafsa");
-
-                      showCities(citiesImages, citiesNames, "gafsa");
+                      showCities("gafsa");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -777,11 +771,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("mahdia");
-
-                      showCities(citiesImages, citiesNames, "mahdia");
+                      showCities("mahdia");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -876,11 +866,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("benzart");
-
-                      showCities(citiesImages, citiesNames, "benzart");
+                      showCities("benzart");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -975,11 +961,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("beja");
-
-                      showCities(citiesImages, citiesNames, "beja");
+                      showCities("beja");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -1074,11 +1056,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("benarous");
-
-                      showCities(citiesImages, citiesNames, "benarous");
+                      showCities("benarous");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -1173,11 +1151,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("kef");
-
-                      showCities(citiesImages, citiesNames, "kef");
+                      await getPlaceByCity("kef")
+                          .then((_) => showCities("kef"));
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -1272,11 +1247,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("kebili");
-
-                      showCities(citiesImages, citiesNames, "kebili");
+                      showCities("kebili");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -1371,11 +1342,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("jendouba");
-
-                      showCities(citiesImages, citiesNames, "jendouba");
+                      showCities("jendouba");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -1470,11 +1437,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("kaoiraouin");
-
-                      showCities(citiesImages, citiesNames, "kaoiraouin");
+                      showCities("kaoiraouin");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -1569,11 +1532,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      citiesNames = [];
-
-                      citiesNames = await getPlaceByCity("kasserine");
-
-                      showCities(citiesImages, citiesNames, "kasserine");
+                      showCities("kasserine");
                     },
                     child: SingleChildScrollView(
                       child: Column(
@@ -1691,10 +1650,9 @@ class _ProfilePageState extends State<ProfilePage> {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  Future<void> showCities(  //show the cities in this place
-      List<String> citiesImages, List<Datum>? citiesNames1, state) async {
+  Future<void> showCities(
+      String state) async {
 
-    List<Datum> citiesNames = await getPlaceByCity(state);
 
     return showModalBottomSheet(
       context: context,
@@ -1737,7 +1695,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             CircleAvatar(
                               backgroundColor: Colors.green,
                               radius: 20,
-
                               child: IconButton(
                                 padding: EdgeInsets.zero,
                                 icon: Icon(Icons.add),
@@ -1765,12 +1722,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         )),
-                    Expanded(  //show image 0 of the city
+                    Expanded(
+                        //show image 0 of the city
                         child: Container(
                       margin: const EdgeInsets.only(
                           left: 15.0, right: 20.0, top: 5.0),
                       padding: const EdgeInsets.all(12.0),
-                      child: citiesNames!.isNotEmpty
+                      child: citiesNames.isNotEmpty
                           ? ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
@@ -1792,47 +1750,50 @@ class _ProfilePageState extends State<ProfilePage> {
                                             sharedPreferences
                                                 ?.getString('token')
                                                 .toString(),
-                                    citiesNames[index].images[0]['path'] /*split(",")*/,
-                                   /*imagesPlace = citiesNames[index]
+                                    citiesNames[index].images[0]
+                                        ['path'] /*split(",")*/,
+                                    /*imagesPlace = citiesNames[index]
                                         .images[0],*/
-                                      /*  .split(
+                                    /*  .split(
                                             ",")*/
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 PlaceDetailsPage(
-                                                    imagesPlace,
-                                                    placeName,
-                                                    citiesNames[index]
-                                                        .id
-                                                        .toString(),
-                                                    state,
-                                                    placeDescription,
-                                                    placeAddress,
-                                                    isAuteur,
-                                                    citiesNames[index]
-                                                        .latitude
-                                                        .toString(),
-                                                    citiesNames[index]
-                                                        .longitude
-                                                        .toString(),
-                                                    citiesNames[index]
-                                                        .images[0]['path'])))
+                                                  imagesPlace,
+                                                  placeName,
+                                                  citiesNames[index]
+                                                      .id
+                                                      .toString(),
+                                                  state,
+                                                  placeDescription,
+                                                  placeAddress,
+                                                  isAuteur,
+                                                  citiesNames[index]
+                                                      .latitude
+                                                      .toString(),
+                                                  citiesNames[index]
+                                                      .longitude
+                                                      .toString(),
+                                                  citiesNames[index]
+                                                      .getFirstImage(),
+                                                )))
                                   },
                                   child: Column(children: [
-                                    Container(
-                                        width: 200,
-                                        height: 150,
-                                        child:
-                                        Image.network(
-                                          //show image 0 of the list
-                                           citiesNames[index]
-                                                .images[0]['path']
-                                             /* .substring(0, citiesNames[index]
+                                    citiesNames[index].getFirstImage() != null
+                                        ? Container(
+                                            width: 200,
+                                            height: 150,
+                                            child: Image.network(
+                                                //show image 0 of the list
+                                                citiesNames[index]
+                                                    .getFirstImage()!
+                                                /* .substring(0, citiesNames[index]
                                                .images[0]['path'].indexOf(
                                                ","))*/
-                                                        )),
+                                                ))
+                                        : SizedBox(),
                                     Center(
                                         child: Text(citiesNames[index].name,
                                             style: TextStyle(
