@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
                               ),
-                              Container(
+                              /*Container(
                                 margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                                 alignment: Alignment.topRight,
                                 child: GestureDetector(
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              ),*/
                               SizedBox(height: 10.0),
                               Container(
                                 decoration: BoxDecoration(

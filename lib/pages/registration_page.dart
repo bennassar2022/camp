@@ -109,7 +109,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         Text(
                           'Registration',
                           style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.normal),
+                               fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54),
                         ),
                         SizedBox(
                           height: 30,
