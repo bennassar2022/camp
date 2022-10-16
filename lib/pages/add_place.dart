@@ -67,89 +67,91 @@ class _AddPlacePageState extends State<AddPlacePage> {
         ),
         body: Padding(
             padding: EdgeInsets.all(15),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(15),
-                  child: TextField(
-                    controller: namePlaceController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Place name",
-                      hintText: "Enter place name",
+            child: SingleChildScrollView(
+              child: Column(   //this error 
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: TextField(
+                      controller: namePlaceController,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Place name",
+                        hintText: "Enter place name",
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(15),
-                  child: TextField(
-                    controller: descriptionPlaceController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Place description",
-                      hintText: "Enter place description",
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: TextField(
+                      controller: descriptionPlaceController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Place description",
+                        hintText: "Enter place description",
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(15),
-                  child: TextField(
-                    onTap: () => {pickPlace(context)},
-                    controller: locationPlaceController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 2,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Place location",
-                      hintText: "Pick place location",
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: TextField(
+                      onTap: () => {pickPlace(context)},
+                      controller: locationPlaceController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 2,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Place location",
+                        hintText: "Pick place location",
+                      ),
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  child: Text("Pick images"),
-                  onPressed: () async {
-                    // loadAssets();
-                    final ImagePicker imagePicker = ImagePicker();
-                    // void selectImages() async {
-                    final List<XFile>? selectedImages =
-                        await imagePicker.pickMultiImage(imageQuality: 25);
-                    if (selectedImages!.isNotEmpty) {
-                      imageFileList!.addAll(selectedImages);
-                    }
-                    setState(() {
-                      // imageFileList
-                    });
-                    //  }
-                  },
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: GridView.builder(
-                      itemCount: imageFileList!.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Image.file(File(imageFileList![index].path),
-                            fit: BoxFit.cover);
-                      }),
-                )),
-                ElevatedButton(
-                    onPressed: () {
-                      addPlace(context, namePlaceController.text.toString(),
-                          descriptionPlaceController.text.toString());
+                  ElevatedButton(
+                    child: Text("Pick images"),
+                    onPressed: () async {
+                      // loadAssets();
+                      final ImagePicker imagePicker = ImagePicker();
+                      // void selectImages() async {
+                      final List<XFile>? selectedImages =
+                          await imagePicker.pickMultiImage(imageQuality: 25);
+                      if (selectedImages!.isNotEmpty) {
+                        imageFileList!.addAll(selectedImages);
+                      }
+                      setState(() {
+                        // imageFileList
+                      });
+                      //  }
                     },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green, // Background color
-                    ),
-                    child: Text("Add place"))
-              ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: GridView.builder(
+                  shrinkWrap: true,
+                    itemCount: imageFileList!.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Image.file(File(imageFileList![index].path),
+                          fit: BoxFit.cover);
+                    }),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        addPlace(context, namePlaceController.text.toString(),
+                            descriptionPlaceController.text.toString());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green, // Background color
+                      ),
+                      child: Text("Add place"))
+                ],
+              ),
             )));
   }
 
@@ -232,18 +234,9 @@ class _AddPlacePageState extends State<AddPlacePage> {
         };
 
         print('requestBody : $requestBody');
-
-        //add list of image
-
-        //    var request = http.MultipartRequest('POST', url)
-        //  ..fields.addAll(requestBody);
         List<MultipartFile> newList = <MultipartFile>[];
         for (XFile xfile in imageFileList!) {
-          //    File imageFile = File(xfile.path); //convert Path to File
-          //    var stream = new http.ByteStream(imageFile.openRead());
-          //   var length = await imageFile.length();
-          //    var multipartFile = new http.MultipartFile("images", stream, length,
-          //       filename: basename(imageFile.path));
+     
           newList.add(await MultipartFile.fromFile(xfile.path,
               contentType: MediaType("image", "jpg")));
         }
@@ -251,16 +244,7 @@ class _AddPlacePageState extends State<AddPlacePage> {
         FormData formData = FormData.fromMap(requestBody);
 
         print("newList " + newList.toString());
-        //   request.files.addAll(newList);
-
         final response = await RestClient().dio.post("https://appcamping.herokuapp.com/api/Addplaces", data: formData);
-
-
-        //       await RestClient().dio.post("/api/Addplaces", data: formData);
-
-
-        //  var response = await request.send();
-        // final respStr = await response.stream.bytesToString();
         print(response.data);
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -314,7 +298,6 @@ class _AddPlacePageState extends State<AddPlacePage> {
         imageFileList!.addAll(selectedImages);
       }
       setState(() {
-        // imageFileList
       });
     }
   }

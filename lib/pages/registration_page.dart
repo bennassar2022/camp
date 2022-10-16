@@ -29,20 +29,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   bool checkedValue = false;
   bool checkboxValue = false;
-  /*Future save() async {
-   var res = await http.post((Uri.parse("http://api-camp.herokuapp.com/auth/signup")) ,
-   headers:  <String, String> {
-     'Context-Type' : 'application/json;chaarSet=UTF-8'
-   },
-     body: <String, String>{
-       "firstName": user.firstName,
-       "lastName": user.lastName,
-       "number": user.number,
-       "email": user.email,
-       "pass": user.pass
-     });
-   print(res.body);
- }*/
+
   Future userSignup(String email, String lastName, String firstName,
       String number, String password) async {
     const url = "https://appcamping.herokuapp.com/auth/signup";
@@ -60,20 +47,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
       print("success : $jsonResponse");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("success registration"), backgroundColor: Colors.green));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("success registration"),
+          backgroundColor: Colors.green));
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (BuildContext context) => LoginPage()),
-              (Route<dynamic> route) => false);
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          (Route<dynamic> route) => false);
     } else {
-    //  throw Exception("fail to sign up user");
+      //  throw Exception("fail to sign up user");
       print("Response1 status : ${response.body}");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(response.body), backgroundColor: Colors.red));
-
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(response.body), backgroundColor: Colors.red));
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,7 +142,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             keyboardType: TextInputType.emailAddress,
                             validator: (val) {
                               if (!(val!.isEmpty) &&
-                                  !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                  !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$  ")
                                       .hasMatch(val)) {
                                 return "Enter a valid email address";
                               }
@@ -198,43 +185,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         SizedBox(height: 15.0),
-                        /*   FormField<bool>(
-                          builder: (state) {
-                            return Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Checkbox(
-                                        value: checkboxValue,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            checkboxValue = value!;
-                                            state.didChange(value);
-                                          });
-                                        }),
-                                    Text("I accept all terms and conditions.", style: TextStyle(color: Colors.grey),),
-                                  ],
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    state.errorText ?? '',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(color: Theme.of(context).errorColor,fontSize: 12,),
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                          validator: (value) {
-                            if (!checkboxValue) {
-                              return 'You need to accept terms and conditions';
-                            } else {
-                              return null;
-                            }
-                          },
-                        ), */
-                        /*  SizedBox(height: 11), */
                         Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(80.0),

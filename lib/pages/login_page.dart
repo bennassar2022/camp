@@ -12,25 +12,6 @@ import 'forgot_password_page.dart';
 import 'profile_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-/*Future<void> login() async {
-   if (passController.text.isNotEmpty && emailController.text.isNotEmpty){
-     var response = await http.post(Uri.parse("https://api-camp.herokuapp.com/auth/login"),
-         body: ({
-         "email": emailController.text ,
-         "password": passController.text
-         }));
-     if (response.statusCode == 200 ){
-       Navigator.push(context,MaterialPageRoute(builder: (context) => ProfilePage() ) );
-     } else {
-       ScaffoldMessenger.of(context)
-           .showSnackBar(SnackBar(content: Text("invalid value")));
-     }
-   }else{
-     ScaffoldMessenger.of(context)
-         .showSnackBar(SnackBar(content: Text("blank value fond")));
-   }
-  }*/
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -45,15 +26,13 @@ class _LoginPageState extends State<LoginPage> {
 
   //API
   signIn(String email, String pass) async {
-    // don't use setState inside build method or inside onTap,
     setState(() {
       _isLoading = true;
     });
     Map body = {
       "email": email,
       "password": pass
-    }; // we put here default values, its wrong, try please!
-    // var url = 'https://api-camp.herokuapp.com/auth/login';
+    }; 
     var url = 'https://appcamping.herokuapp.com/auth/login';
     var jsonResponse = null;
     if (passController.text.isNotEmpty && emailController.text.isNotEmpty) {
@@ -66,8 +45,8 @@ class _LoginPageState extends State<LoginPage> {
             _isLoading = false;
           });
           SharedPreferences? shared = await SharedPreferences.getInstance();
-          shared.setString('token', jsonResponse['_id']);
-          shared.setString('email', jsonResponse['email']);
+          await shared.setString('token', jsonResponse['_id']);
+          await shared.setString('email', jsonResponse['email']);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (BuildContext context) => ProfilePage()),

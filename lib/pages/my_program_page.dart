@@ -275,7 +275,7 @@ class _MyProgramPage extends State<MyProgram> {
                     print("programId : $programId");
                     // delete place
                     var url =
-                        "http://192.168.1.17:3000/api/deleteprograms/$programId";
+                        "https://appcamping.herokuapp.com/api/deleteprograms/$programId";
 
                     var jsonResponse;
                     var res = await http.delete((Uri.parse(url)));

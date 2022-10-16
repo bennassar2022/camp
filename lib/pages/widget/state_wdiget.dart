@@ -8,7 +8,8 @@ class StateWdiget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       children: [
         Container(
           height: 160,
@@ -46,10 +47,10 @@ class StateWdiget extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.fromLTRB(15, 5, 20, 5),
-          child: Row(
+          margin: EdgeInsets.fromLTRB(15, 5, 10, 5),
+          child:  Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: [Expanded(child: 
               Text(
                 state.name,
                 style: GoogleFonts.nunito(
@@ -57,7 +58,7 @@ class StateWdiget extends StatelessWidget {
                   color: Colors.black45,
                   fontWeight: FontWeight.w800,
                 ),
-              ),
+              )),
               Row(
                 children: [
                   Row(
@@ -72,11 +73,7 @@ class StateWdiget extends StatelessWidget {
                         color: Colors.lightGreen,
                         size: 14.0,
                       ),
-                      Icon(
-                        Icons.star_rate,
-                        color: Colors.lightGreen,
-                        size: 14.0,
-                      ),
+                     
                       Icon(
                         Icons.star_rate,
                         color: Colors.lightGreen,
@@ -92,9 +89,9 @@ class StateWdiget extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-        ),
+          )),
+        
       ],
-    );
+    ));
   }
 }

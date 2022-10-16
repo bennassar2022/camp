@@ -292,7 +292,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: GridView.count(
                 crossAxisCount: 2,
                 crossAxisSpacing: 20,
-                mainAxisSpacing: 50,
+                mainAxisSpacing: 40,
                 children: 
                   List.generate(
                      stateList.length,
@@ -402,7 +402,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         //show image 0 of the city
                         child: Container(
                       margin: const EdgeInsets.only(
-                          left: 15.0, right: 20.0, top: 5.0),
+                          left: 20.0, right: 5.0, top: 5.0),
                       padding: const EdgeInsets.all(12.0),
                       child: citiesNames.isNotEmpty
                           ? ListView.builder(
@@ -427,11 +427,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 ?.getString('token')
                                                 .toString(),
                                     citiesNames[index].images[0]
-                                        ['path'] /*split(",")*/,
-                                    /*imagesPlace = citiesNames[index]
-                                        .images[0],*/
-                                    /*  .split(
-                                            ",")*/
+                                        ['path'] ,
+                                      imagesPlace.clear(),
+                                        for(int i=0; i< citiesNames[index].images.length; i++) {
+                                          imagesPlace.add(citiesNames[index].images[i]["path"])
+                                        },
+                          
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -461,19 +462,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ? Container(
                                             width: 200,
                                             height: 150,
-                                            child: Image.network(
-                                                //show image 0 of the list
-                                                citiesNames[index]
-                                                    .getFirstImage()!
-                                                /* .substring(0, citiesNames[index]
-                                               .images[0]['path'].indexOf(
-                                               ","))*/
-                                                ))
+                                            child: Image.network( citiesNames[index].getFirstImage()!)
+                                            )
                                         : SizedBox(),
                                     Center(
                                         child: Text(citiesNames[index].name,
                                             style: TextStyle(
-                                                color: Colors.black26,
+                                                color: Colors.black,
                                                 fontSize: 17.0,
                                                 fontWeight:
                                                     FontWeight.normal))),

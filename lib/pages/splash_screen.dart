@@ -6,6 +6,8 @@ import 'package:camping/pages/login_page.dart';
 import 'package:camping/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../common/theme_helper.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -52,35 +54,34 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             SizedBox(height: size.height * 0.2),
-            Container(
-              width: 250,
-              height: 55.0,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
+          
+           Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    color: Colors.orangeAccent),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                    child: Text(
+                                         "LET'S GO",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                          //    sharedPreferences?.getString("token") != null && sharedPreferences?.getString("token") != ""
-                            //     ? ProfilePage()
+                         
                           LoginPage()));
-                },
-            /*    shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(0),*/
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                     color: Colors.orangeAccent),
-                  child: Text(
-                    "LET'S GO",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
+                                  },
+                                ),
+                              ),
+          
           ],
         ),
       ),

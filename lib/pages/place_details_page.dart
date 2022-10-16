@@ -48,7 +48,6 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
   TextEditingController? descriptionPlaceController = TextEditingController();
 
   TextEditingController? addressPlaceController = TextEditingController();
-
   deletePlace(String placeId) {
     showDialog(
         context: context,
@@ -89,46 +88,6 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                 )
               ],
             ));
-    // return AlertDialog(
-    //   title: const Text('Delete place'),
-    //   content: SingleChildScrollView(
-    //     child: ListBody(
-    //       children: const <Widget>[
-    //         Text('are you sure to delete this place ??', style: TextStyle(fontSize: 15.0),),
-    //         //   Text('Would you like to approve of this message?'),
-    //       ],
-    //     ),
-    //   ),
-    //   actions: <Widget>[
-    //     TextButton(
-    //       child: const Text('Delete',
-    //           style: TextStyle(color: Colors.red)),
-    //       onPressed: () async {
-    //         // delete place
-    //              var url = "http://192.168.100.152:4000/api/deleteplaces/$placeId";
-    //
-    // var jsonResponse;
-    // var res = await http.delete((Uri.parse(url)));
-    // if (res.statusCode == 200) {
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     backgroundColor: Colors.lightGreen,
-    //     content: Text("Success delete place..", style: TextStyle(color: Colors.white),),
-    //   ));
-    //
-    //   Navigator.of(context).pushAndRemoveUntil(
-    //       MaterialPageRoute(builder: (BuildContext context) => ProfilePage()),
-    //           (Route<dynamic> route) => false);
-    // }
-    //       },
-    //     ),
-    //     TextButton(
-    //       child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
-    //       onPressed: () {
-    //         Navigator.of(context).pop();
-    //       },
-    //     ),
-    //   ],
-    // );
   }
 
   @override
@@ -136,17 +95,14 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
     print("imagesPlace ${widget.imagesPlace!.length}");
     return Scaffold(
         appBar: AppBar(
-          title: Text('Details place'),backgroundColor: Colors.green,
+          title: Text('Details place'),
+          backgroundColor: Colors.green,
           actions: [
             widget.isAuteur!
                 ? IconButton(
-                    icon: Icon(
-                      Icons.delete_forever_outlined,
-                    ),
+                    icon: Icon(Icons.delete_forever_sharp),
                     onPressed: () {
-                      // Navigator.push(context, MaterialPageRoute(
-                      //     builder: (context) =>
-                      deletePlace(widget.placeId!); //),);
+                      deletePlace(widget.placeId!);
                     },
                   )
                 : SizedBox(),
@@ -166,8 +122,8 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                     Expanded(
                         child: Container(
                       margin: const EdgeInsets.only(
-                          left: 15.0, right: 20.0, top: 5.0),
-                      padding: const EdgeInsets.all(12.0),
+                          left: 15.0, right: 20.0, top: 15.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: widget.imagesPlace!.isNotEmpty
                           ? ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -178,15 +134,10 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                                   onTap: () => {},
                                   child: Column(children: [
                                     Container(
-                                        width: 200,
-                                        height: 150,
-                                        child: /*Image.memory(base64.decode(
-                                            widget.imagesPlace![index].trim()
-                                            ))*/
-                                        Image.network(
-                                          //show image 0 of the list
-                                            widget.imagesPlace![index]
-                                        ),
+                                      width: 240,
+                                      height: 150,
+                                      child: Image.network(widget.imagesPlace![
+                                          index]), // display list of images of cities
                                     )
                                   ]),
                                 );
@@ -198,53 +149,60 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                             ),
                     )),
                     Padding(
-                      padding: EdgeInsets.all(15),
-                      child: TextField(
-                        controller: namePlaceController,
-                        enabled: widget.isAuteur! ? true : false,
-                        decoration: InputDecoration(
-                          border:
-                              widget.isAuteur! ? OutlineInputBorder() : null,
-                          labelText: widget.isAuteur! ? 'Place name' : null,
-                          hintText: widget.placeName,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(15),
-                      child: TextField(
-                        controller: descriptionPlaceController,
-                        enabled: widget.isAuteur! ? true : false,
-                        decoration: InputDecoration(
-                          border:
-                              widget.isAuteur! ? OutlineInputBorder() : null,
-                          labelText:
-                              widget.isAuteur! ? 'Place description' : null,
-                          hintText: widget.placeDescription,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(15),
+                      padding: EdgeInsets.all(10),
                       child: TextField(
                         obscureText: true,
                         enabled: false,
                         decoration: InputDecoration(
-                          border:
-                              widget.isAuteur! ? OutlineInputBorder() : null,
-                          // labelText: widget.isAuteur! ? 'Place address' : null,
-                          hintText: widget.placeAddress,
+                          prefixIcon: Icon(Icons.cabin),
+                          border: InputBorder.none,
+                          hintText: widget.placeName,
+                           hintStyle: TextStyle(color: Colors.black),
+
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: TextField(
+                        obscureText: true,
+                        enabled: false,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.place ),
+                          border: InputBorder.none,
+                          hintText: widget.placeAddress,
+                          hintStyle: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(fontSize: 15,color: Colors.black),
+                        children: <TextSpan>[
+                          
+                             TextSpan(text: 'description : ', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 15) ),
+                             
+                              TextSpan(text: " ${widget.placeDescription}"),
+
+  
+                        ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        "if you like this place can you add in your program",
+                        style: TextStyle(color: Colors.black45),
+                      ),
+                    ),
+                    //   SizedBox(height:5),
                     ElevatedButton(
-                   //  textColor: Colors.white,
-                   //   color: Colors.green,
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green, // Background color
                       ),
-
-                      child: const Text('Camp program'),
+                      child: const Text('program'),
                       onPressed: () => {
                         showModalBottomSheet(
                           context: context,
@@ -309,6 +267,10 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                                           ),
                                         ),
                                         ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors
+                                                  .green, // Background color
+                                            ),
                                             onPressed: () async {
                                               int respCode = await addProgram(
                                                   context,
@@ -356,53 +318,9 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                             });
                           },
                         )
-                        // displayDialogCampProgram(context)
                       },
                     ),
                     const SizedBox(height: 20.0),
-                    Visibility(
-                        visible: widget.isAuteur!,
-                        child: ElevatedButton(
-                       //   textColor: Colors.white,
-                      //    color: Colors.blue,
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green, // Background color
-                          ),
-                          child: const Text('Update place'),
-                          onPressed: () async {
-                            int respCode = await editPlace(
-                                context,
-                                namePlaceController!.text.toString().trim(),
-                                descriptionPlaceController!.text
-                                    .toString()
-                                    .trim());
-                            if (respCode == 200) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                backgroundColor: Colors.green,
-                                content: Text(
-                                  'Place updated successfully..',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.white),
-                                ),
-                              ));
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                  'something went wrong!',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.white),
-                                ),
-                              ));
-                            }
-                          },
-                        ))
                   ],
                 ))
           ]));
@@ -475,16 +393,6 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
       startDateSelected = date;
       startDate.text = "${date.day} - ${date.month} - ${date.year}";
     }, currentTime: DateTime.now(), locale: LocaleType.en);
-    /*final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: startDateSelected,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != startDateSelected) {
-      // setState(() {
-      startDateSelected = picked;
-      // });
-    }*/
   }
 
   Future<void> _selectDateEnd(BuildContext context) async {
@@ -520,6 +428,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
       // });
     }*/
   }
+
   Future<int> addProgram(context, String startDate, String endDate,
       String state, String placeName, String placeId) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -546,34 +455,6 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
     }
   }
 
-  Future<int> editPlace(context, String name, String description) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    print("placeId : ${widget.placeId!}");
-
-    if (name != "" && name.length > 3) {
-      var responseEditPlace = await http.put(
-          (Uri.parse(
-              'https://appcamping.herokuapp.com/api/Updateplaces/${widget.placeId!}')),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, String>{
-            'Name': name,
-            'description': description.isEmpty ? "" : description,
-            // 'user_id': sharedPreferences.getString('token').toString(),
-            // 'city': widget.state!,
-            // 'Adresse': widget.placeAddress!,
-            // 'latitude': widget.latitude!,
-            // 'longitude': widget.longitude!,
-            // 'images': widget.cityImages!,
-          }));
-
-      return responseEditPlace.statusCode;
-    } else {
-      return 300;
-    }
-  }
 }
 
 class Carousel extends StatefulWidget {
